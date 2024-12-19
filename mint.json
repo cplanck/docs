@@ -2,8 +2,8 @@
   "$schema": "https://mintlify.com/schema.json",
   "name": "Documentation",
   "logo": {
-    "dark": "/logo/cryosphere-innovation-black.png",
-    "light": "/logo/cryosphere-innovation-white.png"
+    "dark": "/logo/cryosphere-innovation-white.png",
+    "light": "/logo/cryosphere-innovation-black.png"
   },
   "favicon": "/favicon.svg",
   "colors": {

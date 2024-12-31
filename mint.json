@@ -116,12 +116,6 @@
     "github": "https://github.com/mintlify",
     "linkedin": "https://linkedin.com/company/mintlify"
   },
-  "feedback": {"suggestEdit": true},
-  "redirects": [
-  {
-    "source": "/:slug*",
-    "destination": "https://cryosphereinnovation.com/:slug*"
-  }
-]
+  "feedback": {"suggestEdit": true}
 }
 

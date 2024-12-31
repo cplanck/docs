@@ -1,0 +1,211 @@
+---
+title: Sensors
+---
+
+The sensor specifications for SIMB3s of various verisions are listed below.
+## SIMB3 V3
+#### Produced May 2019 - June 2022
+
+The SIMB3 V3 comprises almost the entirety of data in the <Link href='/data'>public data repository</Link>. It is likely that if you are looking for specifications for an instrument deployed before 2023 that it was an SIMB3 V3.
+
+<div>
+   <div className='grid grid-cols-4 p-2 gap-2 bg-shade2 rounded-md'>
+      <span class='truncate text-invertedShade5'>Sensor</span>
+      <span class='truncate text-invertedShade5'>Field</span>
+      <span className='text-invertedShade5 text-center hidden md:block'>Precision</span>
+      <span className='text-invertedShade5 text-center'>Accuracy</span>
+    </div>
+  <div className='flex flex-col rounded-md divide-y divide-shade3'>
+      <div className='grid grid-cols-4 p-2 rounded-md'>
+        <span class='truncate'>Air Temperature</span>
+        <span class='truncate'>`air_temp`</span>
+        <span className='text-invertedShade5 text-center'>0.1 C</span>
+        <span className='text-invertedShade5 text-center'>+/- 0.5 C</span>
+      </div>
+     <div className='grid grid-cols-4 p-2 gap-2 rounded-md'>
+        <span class='truncate'>Barometric Pressure</span>
+        <span class='truncate'>`air_pressure`</span>
+        <span className='text-invertedShade5 text-center'>0.1 mBar</span>
+        <span className='text-invertedShade5 text-center'>+/- 1 mBar</span>
+      </div>
+      <div className='grid grid-cols-4 p-2 gap-2 rounded-md'>
+        <span class='truncate'>Latitude</span>
+        <span class='truncate'>`latitude`</span>
+        <span className='text-invertedShade5 text-center'>~ 0.1 m</span>
+        <span className='text-invertedShade5 text-center'>3 m</span>
+      </div>
+      <div className='grid grid-cols-4 p-2 gap-2 rounded-md'>
+        <span class='truncate'>Longitude</span>
+        <span class='truncate'>`longitude`</span>
+        <span className='text-invertedShade5 text-center'>~ 0.1 m</span>
+        <span className='text-invertedShade5 text-center'>+/-3 m</span>
+      </div>
+      <div className='grid grid-cols-4 p-2 gap-2 rounded-md'>
+          <span class='truncate'>Water Temperature</span>
+          <span class='truncate'>`water_temp`</span>
+          <span className='text-invertedShade5 text-center'> 0.01 C</span>
+          <span className='text-invertedShade5 text-center'>+/- 0.5 C</span>
+      </div>
+      <div className='grid grid-cols-4 p-2 gap-2 rounded-md'>
+          <span class='truncate'>Surface Rangefinder</span>
+          <span class='truncate'>`surface_distance`</span>
+          <span className='text-invertedShade5 text-center'>0.01 m</span>
+          <span className='text-invertedShade5 text-center'>+/- 0.001 m</span>
+      </div>
+       <div className='grid grid-cols-4 p-2 gap-2 rounded-md'>
+          <span class='truncate'>Underwater Rangefinder</span>
+          <span class='truncate'>`bottom_distance`</span>
+          <span className='text-invertedShade5 text-center'>0.01 m</span>
+          <span className='text-invertedShade5 text-center'>+/- 0.01 m</span>
+        </div>
+      <div className='grid grid-cols-4 p-2 gap-2 rounded-md'>
+          <span class='truncate'>Bruncin Temp String</span>
+          <span class='truncate'>`dtc_values_0-191`</span>
+          <span className='text-invertedShade5 text-center'>0.125 C</span>
+          <span className='text-invertedShade5 text-center'>+/- 0.5 C</span>
+        </div>
+  </div>
+</div>
+
+## SIMB3 V4 <span class='textGradient'>New</span>
+
+#### Produced March 2023 - Present
+
+The version 4 SIMB3 inherits the SIMB3 V3 sensor suite, but replaces the Bruncin temperature string with a custom embedded string. The embedded string has fewer temperature sensors (160 as opposed to 192) but is higher precision (0.01 C instead of 0.125 C).
+<div>
+   <div className='grid grid-cols-4 p-2 gap-2 bg-shade2 rounded-md'>
+      <span class='truncate text-invertedShade5'>Sensor</span>
+      <span class='truncate text-invertedShade5'>Field</span>
+      <span className='text-invertedShade5 text-center'>Precision</span>
+      <span className='text-invertedShade5 text-center'>Accuracy</span>
+    </div>
+  <div className='flex flex-col rounded-md divide-y divide-shade3'>
+      <div className='grid grid-cols-4 p-2 rounded-md'>
+        <span class='truncate'>Air Temperature</span>
+        <span class='truncate'>`air_temp`</span>
+        <span className='text-invertedShade5 text-center'>0.1 C</span>
+        <span className='text-invertedShade5 text-center'>+/- 0.5 C</span>
+      </div>
+     <div className='grid grid-cols-4 p-2 gap-2 rounded-md'>
+        <span class='truncate'>Barometric Pressure</span>
+        <span class='truncate'>`air_pressure`</span>
+        <span className='text-invertedShade5 text-center'>0.1 mBar</span>
+        <span className='text-invertedShade5 text-center'>+/- 1 mBar</span>
+      </div>
+      <div className='grid grid-cols-4 p-2 gap-2 rounded-md'>
+        <span class='truncate'>Latitude</span>
+        <span class='truncate'>`latitude`</span>
+        <span className='text-invertedShade5 text-center'>~ 0.1 m</span>
+        <span className='text-invertedShade5 text-center'>3 m</span>
+      </div>
+      <div className='grid grid-cols-4 p-2 gap-2 rounded-md'>
+        <span class='truncate'>Longitude</span>
+        <span class='truncate'>`longitude`</span>
+        <span className='text-invertedShade5 text-center'>~ 0.1 m</span>
+        <span className='text-invertedShade5 text-center'>+/-3 m</span>
+      </div>
+    <div className='grid grid-cols-4 p-2 gap-2 rounded-md'>
+          <span class='truncate'>Water Temperature</span>
+          <span class='truncate'>`water_temp`</span>
+          <span className='text-invertedShade5 text-center'> 0.01 C</span>
+          <span className='text-invertedShade5 text-center'>+/- 0.5 C</span>
+      </div>
+    <div className='grid grid-cols-4 p-2 gap-2 rounded-md'>
+        <span class='truncate'>Surface Rangefinder</span>
+        <span class='truncate'>`surface_distance`</span>
+        <span className='text-invertedShade5 text-center'>0.01 m</span>
+        <span className='text-invertedShade5 text-center'>+/- 0.001 m</span>
+      </div>
+     <div className='grid grid-cols-4 p-2 gap-2 rounded-md'>
+        <span class='truncate'>Underwater Rangefinder</span>
+        <span class='truncate'>`bottom_distance`</span>
+        <span className='text-invertedShade5 text-center'>0.01 m</span>
+        <span className='text-invertedShade5 text-center'>+/- 0.01 m</span>
+      </div>
+    <div className='grid grid-cols-4 p-2 gap-2 rounded-md'>
+        <span class='truncate'>Embedded Temp String</span>
+        <span class='truncate'>`dtc_values_0-159`</span>
+        <span className='text-invertedShade5 text-center'>0.01 C</span>
+        <span className='text-invertedShade5 text-center'>+/- 0.5 C</span>
+      </div>
+  </div>
+</div>
+
+## SIMB3 CTD
+
+#### Produced March 2022 (special order)
+
+The SIMB3 CTD is a custom instrument built for Christian Haas of the [Alfred Wegener Institute](https://www.awi.de/en/). The CTD SIMB3 includes a custom CTD package the measures conductivity, temperature, and depth (pressure) and does not include a temperature string. 
+
+<div>
+   <div className='grid grid-cols-4 p-2 gap-2 bg-shade2 rounded-md'>
+      <span class='truncate text-invertedShade5'>Sensor</span>
+      <span class='truncate text-invertedShade5'>Field</span>
+      <span className='text-invertedShade5 text-center'>Precision</span>
+      <span className='text-invertedShade5 text-center'>Accuracy</span>
+    </div>
+  <div className='flex flex-col rounded-md divide-y divide-shade3'>
+      <div className='grid grid-cols-4 p-2 rounded-md'>
+        <span class='truncate'>Air Temperature</span>
+        <span class='truncate'>`air_temp`</span>
+        <span className='text-invertedShade5 text-center'>0.1 C</span>
+        <span className='text-invertedShade5 text-center'>+/- 0.5 C</span>
+      </div>
+     <div className='grid grid-cols-4 p-2 gap-2 rounded-md'>
+        <span class='truncate'>Barometric Pressure</span>
+        <span class='truncate'>`air_pressure`</span>
+        <span className='text-invertedShade5 text-center'>0.1 mBar</span>
+        <span className='text-invertedShade5 text-center'>+/- 1 mBar</span>
+      </div>
+      <div className='grid grid-cols-4 p-2 gap-2 rounded-md'>
+        <span class='truncate'>Latitude</span>
+        <span class='truncate'>`latitude`</span>
+        <span className='text-invertedShade5 text-center'>~ 0.1 m</span>
+        <span className='text-invertedShade5 text-center'>3 m</span>
+      </div>
+      <div className='grid grid-cols-4 p-2 gap-2 rounded-md'>
+        <span class='truncate'>Longitude</span>
+        <span class='truncate'>`longitude`</span>
+        <span className='text-invertedShade5 text-center'>~ 0.1 m</span>
+        <span className='text-invertedShade5 text-center'>+/-3 m</span>
+      </div>
+    <div className='grid grid-cols-4 p-2 gap-2 rounded-md'>
+          <span class='truncate'>Water Temperature</span>
+          <span class='truncate'>`water_temp`</span>
+          <span className='text-invertedShade5 text-center'> 0.01 C</span>
+          <span className='text-invertedShade5 text-center'>+/- 0.5 C</span>
+      </div>
+    <div className='grid grid-cols-4 p-2 gap-2 rounded-md'>
+        <span class='truncate'>Surface Rangefinder</span>
+        <span class='truncate'>`surface_distance`</span>
+        <span className='text-invertedShade5 text-center'>0.01 m</span>
+        <span className='text-invertedShade5 text-center'>+/- 0.001 m</span>
+      </div>
+     <div className='grid grid-cols-4 p-2 gap-2 rounded-md'>
+        <span class='truncate'>Underwater Rangefinder</span>
+        <span class='truncate'>`bottom_distance`</span>
+        <span className='text-invertedShade5 text-center'>0.01 m</span>
+        <span className='text-invertedShade5 text-center'>+/- 0.01 m</span>
+      </div>
+    <div className='grid grid-cols-4 p-2 gap-2 rounded-md'>
+        <span class='truncate'>Ocean Conductivity</span>
+        <span class='truncate'>`ctd_conductivity`</span>
+        <span className='text-invertedShade5 text-center'>1 mS</span>
+        <span className='text-invertedShade5 text-center'>+/- 5 mS</span>
+      </div>
+    <div className='grid grid-cols-4 p-2 gap-2 rounded-md'>
+        <span class='truncate'>Ocean Temperature</span>
+        <span class='truncate'>`ctd_temperature`</span>
+        <span className='text-invertedShade5 text-center'>0.5 C</span>
+        <span className='text-invertedShade5 text-center'>+/- 0.01 C</span>
+      </div>
+    <div className='grid grid-cols-4 p-2 gap-2 rounded-md'>
+        <span class='truncate'>Ocean Pressure</span>
+        <span class='truncate'>`ctd_pressure`</span>
+        <span className='text-invertedShade5 text-center'>1 mBar</span>
+        <span className='text-invertedShade5 text-center'>+/- 10 mBar</span>
+      </div>
+  </div>
+</div>
+
+For more information about this product, check out the <Link href='/docs/simb3-ctd'> SIMB3 MicroCTD add-on</Link> article.

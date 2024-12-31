@@ -1,0 +1,35 @@
+---
+title: 'Additional Payloads'
+---
+
+We offer several sensor packages that can be added upon request. These include:
+- A <Link href='/docs/simb3-ctd'>micro CTD add on</Link> for moored CTD casts taken from the bottom of the buoy. 
+- Apogee Pyranometers for measuring incident and reflected sunlight
+- A radio-equipped datalogger for interacting with nearby remote nodes (<span class='textGradient'>Experimental</span>)
+
+We can also work with you to create a custom solution that adds, subtracts, or modifies the existing SIMB3 sensor payload to suit your observational objectives. 
+
+<img height='700px' width='1000px' src='https://d15g1rufdjpafj.cloudfront.net/documentation/media/912f301e-7f18-41c6-8345-41c49261ff78_simb3-with-apogees.jpeg'/>
+<span class='text-invertedShade5 text-sm'>An SIMB3 with reflected, incident, and transmitted (underwater) light sensing pyranometers at our shop in West Lebanon, NH. </span>
+
+
+## Payload Considerations
+
+Engineered as a platform, SIMB3 has features that support the addition of an arbitrary number of additional sensors. There are, however, several considerations that must be weighed when considering modifying sensor payloads.
+
+### Physical compatibility
+Auxiliary sensors must physically fit on the buoy and should not greatly modify its weight. SIMB3 is a floating instrument, so additional weight modifies the buoyancy characteristics and flotation depth. 
+
+### Electronic compatibility & Power Requirements
+
+SIMB3 is equipped with a custom Arduino-based datalogger that interfaces with each sensor and transmits data via satellite. By default, additional sensor payloads are interfaced via I2C directly or via an adapter board. 
+
+Generally speaking, auxiliary sensor payloads must have reasonable power requirements, however, what constitutes a reasonable power requirement is subjective as it depends on the desired lifespan of the instrument.
+
+
+### Data payload
+Satellite communication is accomplished via the Iridium Short Burst Data (SBD) messaging service for low-cost, reliable, worldwide communication. Additional data payloads must generally fit into a single SBD message, which is capped at 340 bytes. A minimally-equipped SIMB3 uses approximately 20 bytes (latitude and longitude, time stamp, battery voltage, and diagnostics).
+
+## Custom solutions
+
+If you're interested in using SIMB3 for your next project but need a custom sensor suite or modified hardware, <Link href='/contact'>let us know</Link> and we'll work with you to build your perfect instrument.

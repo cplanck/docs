@@ -1,19 +1,21 @@
 {
   "$schema": "https://mintlify.com/schema.json",
-  "name": "Documentation",
+  "name": "Cryosphere Innovation",
   "logo": {
     "dark": "/logo/cryosphere-innovation-white.png",
     "light": "/logo/cryosphere-innovation-black.png"
   },
-  "favicon": "/favicon.svg",
+  "theme": "prism",
+  "favicon": "/favicon.png",
   "colors": {
-    "primary": "#0D9373",
-    "light": "#07C983",
-    "dark": "#0D9373",
+    "primary": "#0F2058",
+    "light": "#3B81F6",
+    "dark": "#3B81F6",
     "anchors": {
-      "from": "#0D9373",
-      "to": "#07C983"
-    }
+      "from": "#0F2058",
+      "to": "#3B81F6"
+    },
+    "background": {"dark": "#000", "light": "#fff"}
   },
   "topbarLinks": [
     {
@@ -23,12 +25,20 @@
   ],
   "topbarCtaButton": {
     "name": "Dashboard",
-    "url": "https://cryosphereinnovation.com"
+    "url": "https://dashboard.mintlify.com"
   },
   "tabs": [
     {
-      "name": "API Reference",
+      "name": "SIMB3",
+      "url": "simb3"
+    },
+    {
+      "name": "API",
       "url": "api-reference"
+    },
+    {
+      "name": "Articles",
+      "url": "articles"
     }
   ],
   "anchors": [
@@ -36,16 +46,6 @@
       "name": "Documentation",
       "icon": "book-open-cover",
       "url": "https://mintlify.com/docs"
-    },
-    {
-      "name": "Community",
-      "icon": "slack",
-      "url": "https://mintlify.com/community"
-    },
-    {
-      "name": "Blog",
-      "icon": "newspaper",
-      "url": "https://mintlify.com/blog"
     }
   ],
   "navigation": [
@@ -55,6 +55,34 @@
         "introduction",
         "quickstart",
         "development"
+      ]
+    },
+    {
+      "group": "SIMB3",
+      "pages": [
+        "simb3/introduction",
+        "simb3/capabilities",
+        "simb3/dimensions",
+        "simb3/sensors",
+        "simb3/deploying",
+        "simb3/webpage",
+        "simb3/additional-payloads",
+        "simb3/purchasing",
+        "simb3/shipping"
+        
+      ]
+    },
+    {
+      "group": "Articles",
+      "pages": [
+        "articles/simb3-deployed-on-mosaic",
+        "tutorials/visualizing-simb3-data-using-matlab"
+      ]
+    },
+    {
+      "group": "Data Platform",
+      "pages": [
+        "data-platform/introduction"
       ]
     },
     {
@@ -87,5 +115,13 @@
     "x": "https://x.com/mintlify",
     "github": "https://github.com/mintlify",
     "linkedin": "https://linkedin.com/company/mintlify"
+  },
+  "feedback": {"suggestEdit": true},
+  "redirects": [
+  {
+    "source": "/:slug*",
+    "destination": "https://cryosphereinnovation.com/:slug*"
   }
+]
 }
+

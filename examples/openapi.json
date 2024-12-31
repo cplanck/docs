@@ -1,8 +1,8 @@
 {
   "openapi": "3.0.1",
   "info": {
-    "title": "Cryosphere Innovation REST API",
-    "description": "An API for querying Cryosphere Innovation SIMB3 data",
+    "title": "OpenAPI Plant Store",
+    "description": "A sample API that uses a plant store as an example to demonstrate features in the OpenAPI specification",
     "license": {
       "name": "MIT"
     },
@@ -10,7 +10,7 @@
   },
   "servers": [
     {
-      "url": "https://api.cryosphereinnovation.com"
+      "url": "http://sandbox.mintlify.com"
     }
   ],
   "security": [
@@ -19,30 +19,29 @@
     }
   ],
   "paths": {
-    "/public/deployment/data/{deployment_uuid}": {
+    "/plants": {
       "get": {
-        "description": "Returns SIMB3 data given a deployment UUID",
+        "description": "Returns all plants from the system that the user has access to",
         "parameters": [
           {
-            "name": "deployment_uuid",
-            "in": "path",
-            "required": true,
-            "description": "The unique identifier (UUID) of the deployment",
+            "name": "limit",
+            "in": "query",
+            "description": "The maximum number of results to return",
             "schema": {
-              "type": "string",
-              "format": "uuid"
+              "type": "integer",
+              "format": "int32"
             }
           }
         ],
         "responses": {
           "200": {
-            "description": "List of deployment data",
+            "description": "Plant response",
             "content": {
               "application/json": {
                 "schema": {
                   "type": "array",
                   "items": {
-                    "$ref": "#/components/schemas/DeploymentData"
+                    "$ref": "#/components/schemas/Plant"
                   }
                 }
               }
@@ -133,23 +132,19 @@
   },
   "components": {
     "schemas": {
-      "DeploymentData": {
+      "Plant": {
+        "required": [
+          "name"
+        ],
         "type": "object",
         "properties": {
-          "time_stamp": {
-            "description": "The timestamp of the transmission in Universal Coordinated Time (UTC) and UNIX format",
-            "type": "number",
-            "example": 1714406430
+          "name": {
+            "description": "The name of the plant",
+            "type": "string"
           },
-          "latitude": {
-            "description": "Latitiude of the deployment",
-            "type": "number",
-            "example": 84.938352
-          },
-          "longitude": {
-            "description": "Longitude of the deployment",
-            "type": "number",
-            "example": -55.574828
+          "tag": {
+            "description": "Tag to specify the type",
+            "type": "string"
           }
         }
       },

@@ -15,14 +15,11 @@
       "from": "#0F2058",
       "to": "#3B81F6"
     },
-    "background": {"dark": "#000", "light": "#fff"}
-  },
-  "topbarLinks": [
-    {
-      "name": "Support",
-      "url": "mailto:hi@mintlify.com"
+    "background": {
+      "dark": "#000",
+      "light": "#fff"
     }
-  ],
+  },
   "topbarCtaButton": {
     "name": "Dashboard",
     "url": "https://dashboard.mintlify.com"
@@ -33,28 +30,29 @@
       "url": "simb3"
     },
     {
-      "name": "API",
+      "name": "API Reference",
       "url": "api-reference"
-    },
-    {
-      "name": "Articles",
-      "url": "articles"
     }
   ],
   "anchors": [
     {
       "name": "Documentation",
       "icon": "book-open-cover",
-      "url": "https://mintlify.com/docs"
+      "url": "/docs"
+    },
+    {
+      "name": "Edit this page",
+      "icon": "github",
+      "url": "https://github.com/cplanck/docs"
     }
   ],
   "navigation": [
     {
       "group": "Get Started",
       "pages": [
-        "introduction",
-        "quickstart",
-        "development"
+        "quick-start/deploy-an-simb3",
+        "quick-start/download-data",
+        "quick-start/get-a-quote"
       ]
     },
     {
@@ -69,7 +67,6 @@
         "simb3/additional-payloads",
         "simb3/purchasing",
         "simb3/shipping"
-        
       ]
     },
     {
@@ -83,17 +80,6 @@
       "group": "Data Platform",
       "pages": [
         "data-platform/introduction"
-      ]
-    },
-    {
-      "group": "Essentials",
-      "pages": [
-        "essentials/markdown",
-        "essentials/code",
-        "essentials/images",
-        "essentials/settings",
-        "essentials/navigation",
-        "essentials/reusable-snippets"
       ]
     },
     {
@@ -116,6 +102,8 @@
     "github": "https://github.com/mintlify",
     "linkedin": "https://linkedin.com/company/mintlify"
   },
-  "feedback": {"suggestEdit": true, "thumbsRating": true}
+  "feedback": {
+    "suggestEdit": true,
+    "thumbsRating": true
+  }
 }
-

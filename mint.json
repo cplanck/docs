@@ -7,6 +7,10 @@
   },
   "theme": "prism",
   "favicon": "/favicon.png",
+  "footerSocials": {
+    "linkedin": "https://x.com/mintlify",
+    "website": "https://cryosphereinnovation.com"
+  },
   "colors": {
     "primary": "#0F2058",
     "light": "#3B81F6",
@@ -100,9 +104,7 @@
       ]
     }
   ],
-  "footerSocials": {
-    "linkedin": "https://linkedin.com/company/mintlify"
-  },
+
   "feedback": {
     "suggestEdit": true,
     "thumbsRating": true

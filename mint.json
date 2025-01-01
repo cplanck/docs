@@ -22,7 +22,8 @@
   },
   "topbarCtaButton": {
     "name": "Dashboard",
-    "url": "https://dashboard.mintlify.com"
+    "url": "https://cryosphereinnovation.com",
+    "arrow": true 
   },
   "tabs": [
     {
@@ -38,7 +39,7 @@
     {
       "name": "Documentation",
       "icon": "book-open-cover",
-      "url": "/docs"
+      "url": "articles/simb3-deployed-on-mosaic"
     },
     {
       "name": "Edit this page",
@@ -48,11 +49,12 @@
   ],
   "navigation": [
     {
-      "group": "Get Started",
+      "group": "Getting Started",
       "pages": [
-        "quick-start/deploy-an-simb3",
-        "quick-start/download-data",
-        "quick-start/get-a-quote"
+        "quick-start",
+        "getting-started/deploy-an-simb3",
+        "getting-started/download-data",
+        "getting-started/get-a-quote"
       ]
     },
     {
@@ -62,6 +64,7 @@
         "simb3/capabilities",
         "simb3/dimensions",
         "simb3/sensors",
+        {"group":"Sensors", "pages": ["simb3/sensors"]},
         "simb3/deploying",
         "simb3/webpage",
         "simb3/additional-payloads",
@@ -98,8 +101,6 @@
     }
   ],
   "footerSocials": {
-    "x": "https://x.com/mintlify",
-    "github": "https://github.com/mintlify",
     "linkedin": "https://linkedin.com/company/mintlify"
   },
   "feedback": {

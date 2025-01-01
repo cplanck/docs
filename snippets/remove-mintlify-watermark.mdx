@@ -1,0 +1,12 @@
+export const RemoveMintlify = () => {
+  if (typeof document === "undefined") {
+    return null;
+  } else {
+    setTimeout(() => {
+      const aTag = Array.from(document.querySelectorAll('a')).find(el => el.textContent === 'Powered by Mintlify');
+        if (aTag) {
+            aTag.remove();
+        }
+    }, 1);
+  }
+}

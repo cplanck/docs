@@ -5,7 +5,6 @@
     "dark": "/logo/cryosphere-innovation-white.png",
     "light": "/logo/cryosphere-innovation-black.png"
   },
-  "theme": "prism",
   "favicon": "/favicon.png",
   "footerSocials": {
     "linkedin": "https://x.com/mintlify",
@@ -27,8 +26,15 @@
   "topbarCtaButton": {
     "name": "Dashboard",
     "url": "https://cryosphereinnovation.com",
-    "arrow": true 
+    "arrow": true
   },
+  "topbarLinks": [
+    {
+      "name": "Contact",
+      "url": "https://cryosphereinnovation.com/contact"
+    }
+  ],
+  "modeToggle": { "isHidden": true },
   "tabs": [
     {
       "name": "SIMB3",
@@ -66,9 +72,14 @@
       "pages": [
         "simb3/introduction",
         "simb3/capabilities",
+        {
+          "group": "Sensors",
+          "pages": [
+            "simb3/sensors/v4",
+            "simb3/sensors/v3"
+          ]
+        },
         "simb3/dimensions",
-        "simb3/sensors",
-        {"group":"Sensors", "pages": ["simb3/sensors"]},
         "simb3/deploying",
         "simb3/webpage",
         "simb3/additional-payloads",
@@ -77,10 +88,16 @@
       ]
     },
     {
+      "group": "Tutorials",
+      "pages": [
+        "tutorial/visualizing-simb3-data-using-python",
+        "tutorial/visualizing-simb3-data-using-matlab"
+      ]
+    },
+    {
       "group": "Articles",
       "pages": [
-        "articles/simb3-deployed-on-mosaic",
-        "tutorials/visualizing-simb3-data-using-matlab"
+        "articles/simb3-deployed-on-mosaic"
       ]
     },
     {
@@ -104,7 +121,6 @@
       ]
     }
   ],
-
   "feedback": {
     "suggestEdit": true,
     "thumbsRating": true

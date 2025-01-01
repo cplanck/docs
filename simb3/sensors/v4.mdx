@@ -1,0 +1,15 @@
+---
+title: Version 4
+---
+
+ The version 4 SIMB3 inherits the SIMB3 V3 sensor suite, but replaces the Bruncin temperature string with a custom embedded string. The embedded string has fewer temperature sensors (160 as opposed to 192) but is higher precision (0.01 C instead of 0.125 C).
+    | Sensor                | <Tooltip tip="The field is the header of the data column in the deploymentCSV file and the name of the parameter via the API">Field</Tooltip>| Precision | Accuracy         | 
+    |-----------------------|----------------------|-----------|-------------------|
+    | Air Temperature        | `air_temp`          | 0.1 C    | +/- 0.5 C        |
+    | Barometric Pressure    | `air_pressure`      | 0.1 mBar | +/- 1 mBar       |
+    | Latitude               | `latitude`          | ~ 0.1 m  | 3 m              |
+    | Longitude              | `longitude`         | ~ 0.1 m  | +/- 3 m          |
+    | Water Temperature       | `water_temp`       | 0.01 C   | +/- 0.5 C        |
+    | Surface Rangefinder     | `surface_distance`  | 0.01 m   | +/- 0.001 m      |
+    | Underwater Rangefinder   | `bottom_distance`   | 0.01 m   | +/- 0.01 m       |
+    | Embedded Temp String    | `dtc_values_0-159`  | 0.01 C   | +/- 0.5 C        |

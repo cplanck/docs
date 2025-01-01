@@ -1,0 +1,312 @@
+---
+title: 'Plot SIMB3 data with MATLAB'
+description: 'Learn how to visualize SIMB3 data using MATLAB'
+# icon: 'lines-leaning'
+---
+
+import { RemoveMintlify } from '/snippets/remove-mintlify-watermark.mdx';
+
+<RemoveMintlify />
+
+<Frame>
+<img height="100" noZoom src="/images/articles/simb3_plus_matlab.webp" />
+</Frame>
+
+MATLAB is the programming language of choice for many scientists, engineers, and students. In this tutorial, we'll show you how to use it to create rich visualizations of ice thickness, growth, melt and temperature from SIMB3 data.
+
+**Before we get started, you'll need:**
+
+- An SIMB3 data sheet (or sample below)
+- MATLAB (this tutorial is verified back to at least version R2017b)
+
+If you'd like to skip the tutorial and get straight to plotting, you can download the function and file that we build in this tutorial here: 
+
+- [massBalancePlotF.m](https://d15g1rufdjpafj.cloudfront.net/documentation/media/e09b6a1b-ed77-4e51-b6b2-444668a96bcd_massBalancePlotF.m)
+- [massBalancePlot.m](https://d15g1rufdjpafj.cloudfront.net/documentation/media/faaf8f9e-8a96-4679-9603-cc916bdd9c6d_massBalancePlot.m)
+- [SIMB3sampleDataSheet.csv](https://d15g1rufdjpafj.cloudfront.net/documentation/media/727bda6e-7fcf-4895-b3bc-0a3605c9d6d5_SIMB3sampleDataSheet.csv)
+
+## A quick introduction
+One of the best parts about working with SIMB3 data is that the results are highly visual. With the surface and bottom rangefinder data alone we can see how the ice (and snow!) change thickness through the season. By incorporating data from the vertical temperature string, we can examine the vertical conductive heat flux. If we combine all three measurements, we create a comprehensive picture of the ice state through time that we refer to as a mass balance plot.
+‍
+
+### The mass balance plot
+A mass balance plot shows ice and snow growth, melt, and internal temperature on a single, easily understandable figure (Figure 1). On the x-axis is time and on the y-axis is thickness or depth. As the ice grows and melts, the distances recorded by the SIMB3 surface and bottom rangefinders lengthen and shorten. With a little knowledge of the SIMB3 dimensions and the deployment conditions, we can turn these distances into ice and snow thickness values. Over time, changes in these values represent ice and snow growth and melt.
+
+<div className='text-sm'>
+<img src='https://d15g1rufdjpafj.cloudfront.net/documentation/media/555a2138-14ed-4dd3-a778-b4f26a60159e_4fb86005-a055-4fe3-a1a2-f9c6e7ac4685.png'/>
+<span>**Figure 1:** From the mass balance plot you can easily determine ice growth, melt, snow accumulation, and temperature profile visually. Because SIMB3 independently measures surface and bottom position, surface and bottom melt can be distinguished.</span>
+</div>
+
+In this tutorial, we'll be covering how to make the plot in Figure 1 using MATLAB. 
+ ‍
+
+### Time-series line plots
+SIMB3 is also equipped with sensors that measure upper-ocean temperature, battery voltage, and meteorological data such as air temperature and barometric pressure. Creating these plots is straightforward compared to the mass balance plot, so we're not going to cover it in this article.
+
+## Creating the mass balance plot function
+Okay, let's jump right into it. We're going to start by creating a function that takes in data and creates the filled-layer mass balance plot. We'll then create a script file that calls our function, passing it data from the the SIMB3 datasheet.‍
+
+To create the mass balance plot function, create a new MATLAB file and name it massBalancePlotF.m. Open the file, and paste the following code into it. Don't worry, we'll explain this block-by-block below.
+
+
+```matlab massBalancePlotF.m
+function []=massBalancePlotF(dtc, surface_distance, bottom_distance, time_stamp, initial_snow_depth, distance_between_rangefinders)
+  %% THIS FUNCTION CREATES AN SIMB3 ICE MASS BALANCE PLOT
+  %transpose arrays for plotting
+  dtc=dtc';
+  surface_distance=surface_distance';
+  bottom_distance=bottom_distance';
+  time_stamp = time_stamp';
+   
+  %get length of datasheet
+  [~,n]=size(dtc);
+  %define surface rangefinder height above ice and snow height from first rangefinder reading
+  height_above_ice=surface_distance(1) + initial_snow_depth;
+  snow_height=height_above_ice - surface_distance;
+  %realign x-axis as serial dates proleptic ISO calendar (days since
+  %00-Jan-000)
+  x=datetime(time_stamp,'ConvertFrom','excel');
+  x=datenum(x);
+  %define temperature string position (height above ice)
+  temp_string_length = 3.84; %standard SIMB3 temperature string has 2 cm spacing and 192 thermistors
+  temp_string_offset = 0; %the axial distance between the surface rangefinder and the first thermistor on the DTC
+  temp_string_top = height_above_ice - temp_string_offset;
+  temp_string_bottom = temp_string_length - temp_string_top;
+  temp_string_bottom = -temp_string_bottom; %make negative for plotting
+  %create y-axis spacing from first thermistor to last thermistor
+  y=linspace(temp_string_top,temp_string_bottom,192);
+  %generate mesh for temperature string plotting
+  [X,Y]=meshgrid(x,y);
+   
+  %plot temperature string
+  figure('DefaultAxesFontSize',14)
+  pcolor(X,Y,dtc), hold on
+  shading interp, colormap jet
+  caxis([-40 0])
+  cb=colorbar;
+  cb.Location='eastoutside';
+  %color area between ice surface and snow height
+  patch([x, fliplr(x)], [snow_height, 0*ones(1,n)], [125 125 125]/255,'EdgeColor',[125 125 125]/255)
+  %color area between snow height and upper plot boundary
+  patch([x, fliplr(x)], [snow_height, fliplr(2*ones(1,n))], 'white','EdgeColor','white','LineWidth',2)
+  %color area between bottom position and lower plot boundary
+  ice_thickness = distance_between_rangefinders - height_above_ice - bottom_distance;
+  patch([x, fliplr(x)], [-ice_thickness, fliplr(-3*ones(1,n))], 'blue','EdgeColor','blue','LineWidth',4)
+  %format axes
+  clabel = get(cb,'YTickLabel');
+  clabel = strcat(clabel,'{\circ}C');
+  set(cb,'YTickLabel',clabel);
+  ylabel('Depth')
+  set(gca, 'LineWidth', 3);
+  %convert x-axis labels to dates
+  num_ticks = 4;
+  L = get(gca,'XLim');
+  set(gca,'XTick',linspace(L(1),L(2),num_ticks))
+  datetick('x', 'yyyy-mm-dd','keepticks');
+  ```
+
+Looking at the function declaration, we see it takes a 2D array of temperature string data (dtc), 1D arrays of surface rangefinder readings (surface_distance), bottom rangefinder readings (bottom_distance), and timestamps (time_stamp). It also takes a scalar values of the deployment snow depth (initial_snow_depth) and the fixed distance between the SIMB3 surface and bottom rangefinders (distance_between_rangefinders).
+
+With exception of the deployment snow depth and the SIMB3 rangefinder distance values, each one of these arrays is taken directly from the labeled column of the SIMB3 datasheet. For a detailed explanation of the SIMB3 datasheet, see Getting started with the SIMB3 datasheet.
+
+### Preparing the arrays
+In the first block of this function, we take each of our arrays and transpose their rows and columns. This reshapes the 1D arrays into row vectors of length N, where N is the number of entries in the SIMB3 datasheet that we wish to plot For the 2D DTC array, each row represents a reading from one thermistor on the DTC. A column is a collection of DTC readings (192 in total) along the buoy length at one point in time.
+
+```matlab
+%transpose arrays for plotting
+    dtc=dtc';
+    surface_distance=surface_distance';
+    bottom_distance=bottom_distance';
+    time_stamp = time_stamp';
+```
+
+
+We then find the length of our dataset, which we'll use later when creating our filled plots.
+
+
+```matlab
+%get length of datasheet
+    [~,n]=size(dtc);
+```
+
+
+### Define reference height from ice surface
+In the next block, we create one scalar and two arrays that define the snow height (i.e., the snow thickness) and the ice thickness. The scalar value height_above_ice sets the buoy floatation height (the distance between the surface rangefinder and the ice surface). Here we calculate it as the first surface rangefinder reading plus the snow height at deployment, but it can also be set manually. Often, this value is constant across SIMB3s, but variations in water density (especially between fresh and saltwater ) will cause SIMB3s to float at different heights during deployment and freeze-in.
+
+
+```matlab
+%define surface rangefinder height above ice, snow height from first rangefinder reading, and ice thickness
+    height_above_ice=surface_distance(1) + initial_snow_depth;
+    snow_height=height_above_ice - surface_distance;
+    ice_thickness = distance_between_rangefinders - height_above_ice - bottom_distance;
+```
+
+
+After the floatation height is established, the time-series array of snow height can be determined. We also calculate ice thickness by subtracting the floatation height and the bottom rangefinder distance from the distance between the surface and bottom rangefinders. For a standard SIMB3, distance_between_rangefinders = 4.051 meters.
+
+### Realign Excel timestamp
+To plot dates along the x-axis, we need to realign the Excel serial date to the proleptic ISO calendar used by MATLAB (days since 00-Jan-0000). Fortunately, MATLAB has a built-in function that makes this easy.
+
+
+```matlab
+%realign x-axis as serial dates to proleptic ISO calendar (days since 00-Jan-0000)
+    x=datetime(time_stamp,'ConvertFrom','excel');
+    x=datenum(x);
+```
+
+
+We then convert our x domain array to a datenum, which we can later convert to a date string when we generate our plots.‍
+
+### Temperature string height reference
+Moving along to the third block, we create several variables which define the position of the temperature string relative to the SIMB3 surface rangefinder and ice surface.
+
+
+```matlab
+%define temperature string position (height above ice)
+    temp_string_length = 3.84; %standard SIMB3 temperature string has 2 cm spacing and 192 thermistors
+    temp_string_offset = 0; %the axial distance between the surface rangefinder and the first thermistor on the DTC
+    temp_string_top = height_above_ice - temp_string_offset;
+    temp_string_bottom = temp_string_length - temp_string_top;
+    temp_string_bottom = -temp_string_bottom; %make negative for plotting
+```
+
+
+The standard SIMB3 Bruncin digital temperature string is 3.84 meters long and measures temperature at 2 cm intervals along the length (192 total values). During buoy manufacturing, the position of the first thermistor is placed 0.2 cm below the surface rangefinder. After installation and freeze-in, this becomes a fixed position above the ice (temp_string_top).
+
+Quick note: the SIMB3sampleDataSheet.csv used in this tutorial was generated by a past-generation SIMB3 which had a temp_string_offset = 0. All modern SIMB3s have a temp_string_offset = 0.2
+ 
+The temperature string bottom (i.e., the distance between the ice surface and the final thermistor on the chain) is simply the length of the temperature string minus the height of the first thermistor above the ice surface.
+
+### Plot temperature string values
+As the last step before we can plot the temperature string values, we need to create a vector to represent the vertical spacing of the DTC. To do this, create a vector spanning from temp_string_top to temp_string_bottom with 192 values. Then, create a 2D array of x & y pairs using meshgrid().
+
+
+```matlab
+%create y-axis spacing from first thermistor to last thermistor
+    y=linspace(temp_string_top,temp_string_bottom,192);
+    %generate mesh for temperature string plotting
+    [X,Y]=meshgrid(x,y);
+```
+
+
+We can then call pcolor(), passing it our 2D arrays X, Y, and DTC as arguments.
+
+```matlab
+%plot temperature string
+    figure('DefaultAxesFontSize',14)
+    pcolor(X,Y,dtc), hold on
+    shading interp, colormap jet
+    caxis([-40 0])
+    cb=colorbar;
+    cb.Location='eastoutside';
+```
+
+
+### Plot rangefinder values
+MATLAB makes it quite easy to add filled-area regions representing the SIMB3 surface and bottom rangefinder measurements. While there are several ways to do it, we'll do it using the patch() function which creates polygons from lists of x and y coordinates. Note that the first elements in the x and y arguments correspond to the boundary that we want to plot (snow height, ice thickness, etc.) and the second elements correspond to the location that we'd like to plot up or down to.
+
+
+```matlab
+%color area between ice surface and snow height
+    snow_color = [125 125 125]/255; %grey
+    patch([x, fliplr(x)], [snow_height, zeros(1,n)], snow_color,'EdgeColor',snow_color)
+    %color area between snow height and upper plot boundary
+    patch([x, fliplr(x)], [snow_height, fliplr(2*ones(1,n))], 'white','EdgeColor','white','LineWidth',2)
+    %color area between bottom position and lower plot boundary
+    patch([x, fliplr(x)], [-ice_thickness, fliplr(-3*ones(1,n))], 'blue','EdgeColor','blue','LineWidth',4)
+```
+
+
+We can then format the axes and convert the x-axis to a date using datetick()
+
+
+```matlab
+%format axes
+    clabel = get(cb,'YTickLabel');
+    clabel = strcat(clabel,'{\circ}C');
+    set(cb,'YTickLabel',clabel);
+    ylabel('Depth')
+    set(gca, 'LineWidth', 3);
+    %convert x-axis labels to dates
+    num_ticks = 4;
+    L = get(gca,'XLim');
+    set(gca,'XTick',linspace(L(1),L(2),num_ticks))
+    datetick('x', 'yyyy-mm-dd','keepticks');
+```
+
+
+## Calling the Mass Balance Plot Function
+To call our massBalancePlotF() function, create a new file and name it massBalancePlot.m. Open the file, and add the following code: 
+
+
+```matlab
+clear;clc;close all
+    %import datasheet
+    data = csvread('path/to/your/data/SIMB3sampleDataSheet.csv',1);
+    %specify rows of datasheet you want to plot
+    range = (1:3378);
+    data = data(range,:);
+    %parse data by sensor
+    time_stamp = data(:,3);
+    dtc = data(:,18:end);
+    surface_distance =  smoothdata(data(:,10),'rlowess',4);
+    bottom_distance = data(:,8);
+    %define distance between rangefinders
+    distance_between_rangefinders = 4.051; %m
+    %add initial snow depth from deployment notes
+    initial_snow_depth = 0.2;
+    %call massBalancePlotF function
+    massBalancePlotF(dtc, surface_distance, bottom_distance, time_stamp, initial_snow_depth, distance_between_rangefinders)
+```
+
+
+In this code, we first import our data sheet using csvread() and a path to our datasheet. We then specify the rows in our datasheet that we want to use to build our mass balance plot.
+
+
+```matlab
+%specify rows of datasheet you want to plot
+    range = (1:3378);
+    data = data(range,:);
+```
+
+
+Note: you'll need to replace the 'path/to/your/data/SIMB3sampleDataSheet.csv' with the actual path to the SIMB3 datasheet you'd like to plot. The "1" at the end of csvread() just tells the function to disregard the header.
+
+In the second block, we parse our data array for input to our massBalancePlotF() function. We also define the deployment snow height and the distance between the SIMB3 rangefinders.
+
+
+```matlab
+%parse data by sensor
+    time_stamp = data(:,3);
+    dtc = data(:,18:end);
+    surface_distance =  smoothdata(data(:,10),'rlowess',4);
+    bottom_distance = data(:,8);
+    %define distance between rangefinders
+    distance_between_rangefinders = 4.051; %m
+    %add initial snow depth from deployment notes
+    initial_snow_depth = 0.2;
+```
+
+
+Lastly, we call our massBalancePlotF() function and pass it our newly defined arguments.    
+
+
+
+
+```matlab
+%call massBalancePlotF function
+    massBalancePlotF(dtc, surface_distance, bottom_distance, time_stamp, initial_snow_depth, distance_between_rangefinders)
+```
+
+
+After running the program, you should see the following plot pop up:
+
+<div className='text-sm'>
+<img src='https://d15g1rufdjpafj.cloudfront.net/documentation/media/972457e6-dfa9-4b52-be71-19ee3ea3179e_d29fca45-d75b-4b21-be81-36ba68282995.png'/>
+</div>
+
+Just like that, we've created a mass balance plot using MATLAB. Additionally, because we created a plotting function, running this for many SIMB3s is as simple as placing it in a loop and feeding it multiple datasheets.
+
+We covered a lot in this tutorial, but I hope you found it useful. If you have any questions or concerns, please reach out and we'll get back to you as soon as we can.
+
+If you don't have access to MATLAB, or if you're more of an open-source kind of person, check out our tutorial on <Link href='/docs/visualizing-simb3-data-using-python'>Visualizing SIMB3 data using Python!</Link>
